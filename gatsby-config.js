@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
+    siteUrl: "https://saiqi.keylol.com",
     title: "Saiqi Wedding",
   },
-  plugins: ["gatsby-plugin-postcss", "gatsby-plugin-react-helmet"],
+  plugins: ["gatsby-plugin-sass", "gatsby-plugin-react-helmet"],
 };

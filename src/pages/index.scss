@@ -1,0 +1,186 @@
+@font-face {
+  font-family: "华康圆体W5";
+  src: url("../fonts/HuaKangYuanTi-W5.ttf");
+}
+
+@mixin sans-serif-font {
+  font-family: "华康圆体W5", -apple-system, "Noto Sans", "Helvetica Neue",
+    Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC",
+    "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC",
+    "Source Han Sans CN", "Microsoft YaHei", "Wenquanyi Micro Hei",
+    "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp",
+    sans-serif;
+}
+
+@mixin serif-font {
+  font-family: Baskerville, "Times New Roman", "Liberation Serif", STFangsong,
+    FangSong, FangSong_GB2312, "CWTEX\-F", serif;
+}
+
+main {
+  @include sans-serif-font;
+  padding: 16px 8px;
+  font-size: 14px;
+  line-height: 30px;
+  color: #949292;
+
+  > img {
+    margin: 0 auto;
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h3 {
+  font-size: 15px;
+  line-height: 18px;
+  color: #262626;
+}
+
+.title {
+  font-size: 23px;
+  line-height: 30px;
+  color: #262626;
+  margin: 0 8px;
+}
+
+.subtitle {
+  margin: 12px 8px 0;
+
+  .date {
+    margin-left: 12px;
+  }
+}
+
+.topic-box {
+  background: #f0f0f0;
+  border-radius: 6px;
+  padding: 16px 12px;
+  margin: 22px 8px;
+
+  h3 {
+    margin: 0 0 12px;
+  }
+
+  .topics {
+    color: #83a4c9;
+    margin: 0;
+    line-height: 18px;
+  }
+}
+
+.text-hello {
+  text-align: right;
+}
+
+.music-box {
+  background: #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 22px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .info {
+    h3 {
+      margin: 0;
+    }
+
+    p {
+      font-size: 13px;
+      margin: 12px 0 0;
+      line-height: 16px;
+    }
+  }
+
+  .cover {
+    width: 68px;
+    height: 68px;
+  }
+}
+
+.separator-flower {
+  margin: 35px auto 15px;
+  width: 67px;
+}
+
+.text-intro {
+  text-align: center;
+
+  .serif {
+    @include serif-font;
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+}
+
+.p2 {
+  margin: 35px auto;
+  max-width: 92%;
+}
+
+.separator-we-are-married {
+  width: 187.5px;
+  margin: 25px auto;
+}
+
+.you-and-me-box {
+  background: #f1ebea;
+  padding: 20px;
+
+  .you,
+  .me {
+    display: flex;
+    background: #ffffff;
+  }
+
+  .you {
+    flex-direction: row-reverse;
+    margin-top: 14px;
+  }
+
+  .portrait {
+    position: relative;
+    width: 60%;
+
+    img {
+      width: 100%;
+    }
+
+    .xi {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: translate(-50%, -50%);
+      background: #cfb9ac;
+      border-radius: 50%;
+      width: 23px;
+      height: 23px;
+      box-sizing: border-box;
+      padding-bottom: 1px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .name {
+    flex-grow: 1;
+    text-align: center;
+    align-self: center;
+
+    h3 {
+      @include serif-font;
+    }
+
+    p,
+    h3 {
+      margin: 4px 0;
+    }
+  }
+}
