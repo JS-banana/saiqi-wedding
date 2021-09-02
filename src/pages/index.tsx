@@ -6,6 +6,32 @@ import * as images from "../images";
 import "./index.scss";
 
 const IndexPage: React.FC<PageProps> = () => {
+  const mapContainerRef = React.useRef<HTMLDivElement>();
+  React.useEffect(() => {
+    const initMap = () => {
+      return new TMap.Map(mapContainerRef.current, {
+        center: new TMap.LatLng(37.525263, 111.155715),
+        zoom: 18,
+        showControl: false,
+      });
+    };
+    if (window.TMap) {
+      const map = initMap();
+      return () => {
+        map.destroy();
+      };
+    }
+    const mapRef = { current: null };
+    window.onTMapLoaded = () => {
+      delete window.onTMapLoaded;
+      mapRef.current = initMap();
+    };
+    return () => {
+      mapRef.current?.destroy();
+      delete window.onTMapLoaded;
+    };
+  }, []);
+
   return (
     <main>
       <Helmet>
@@ -27,6 +53,7 @@ const IndexPage: React.FC<PageProps> = () => {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
+        <script src="https://map.qq.com/api/gljs?v=1.exp&key=WRTBZ-6RPEP-J5LDB-LEUAY-SS26E-ZWFEU&callback=onTMapLoaded"></script>
       </Helmet>
       <h1 className="title">Save the date丨贾赛奇 & 薛佳盈的婚礼邀请函</h1>
       <p className="subtitle">
@@ -105,7 +132,12 @@ const IndexPage: React.FC<PageProps> = () => {
           </div>
         </div>
       </div>
-      <p className="text-intro">
+      <div className="title-section">
+        <p className="no">01</p>
+        <p className="text">关于我们</p>
+        <img className="separator-title" src={images.titleSeparator} />
+      </div>
+      <p className="text-intro large-margin">
         2010年
         <br />
         教室里第一次遇见
@@ -114,7 +146,11 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         竟成为彼此生命中的陪伴
       </p>
-      <p className="text-intro">
+      <div className="horizontal-images">
+        <img className="p3" src={images.p3} />
+        <img className="p4" src={images.p4} />
+      </div>
+      <p className="text-intro large-margin">
         2011年
         <br />
         最心动的就是
@@ -125,7 +161,8 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         我奔向你就像奔向未来
       </p>
-      <p className="text-intro">
+      <img className="p5" src={images.p5} />
+      <p className="text-intro large-margin">
         2013年 - 2017年
         <br />
         1800多公里的遥不可及，每个假期都格外珍贵
@@ -134,7 +171,11 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         但习惯不了一个人的思念
       </p>
-      <p className="text-intro">
+      <img className="p6" src={images.p6} />
+      <img className="p7" src={images.p7} />
+      <p className="text-intro large-margin">
+        <img className="separator-reed" src={images.reedSeparator} />
+        <br />
         最终
         <br />
         我们跑赢了时间，打败了距离
@@ -154,7 +195,12 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         我们确定，他 / 她就是对的人
       </p>
-      <p className="text-intro">
+      <div className="horizontal-images">
+        <img className="p8" src={images.p8} />
+        <img className="p9" src={images.p9} />
+        <img className="p10" src={images.p10} />
+      </div>
+      <p className="text-intro large-margin">
         2021年5月21日 我们领证啦
         <br />
         <br />
@@ -162,7 +208,8 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         “我们决定陪伴彼此度过漫长岁月”
       </p>
-      <p className="text-intro">
+      <img className="p11" src={images.p11} />
+      <p className="text-intro large-margin">
         从此，一屋 两人 三餐 四季
         <br />
         喜乐有分享 共度岁月长
@@ -178,7 +225,15 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         生死相依
       </p>
-      <p className="text-intro">
+      <div className="horizontal-images">
+        <img className="p12" src={images.p12} />
+        <img className="p13" src={images.p13} />
+      </div>
+      <div className="horizontal-images">
+        <img className="p14" src={images.p14} />
+        <img className="p15" src={images.p15} />
+      </div>
+      <p className="text-intro large-margin">
         山水一程
         <br />
         风雨一更
@@ -189,17 +244,107 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         愿我们深情共白头
       </p>
+      <img className="p16" src={images.p16} />
+      <img className="p17" src={images.p17} />
+      <div className="title-section">
+        <p className="no">02</p>
+        <p className="text">关于婚礼</p>
+        <img className="separator-title" src={images.titleSeparator} />
+      </div>
+      <img className="p18" src={images.p18} />
       <p className="text-intro">
+        <img className="red-xi" src={images.redXi} />
+        <br />
+        <span className="inviter-name">贾赛奇 & 薛佳盈</span>
+        <br />
         携同我们的父母
         <br />
         真挚地邀请您及家人
         <br />
         见证和分享我们的幸福时刻
       </p>
+      <div className="subtitle-section">
+        <p className="en">WEDDING TIME</p>
+        <p className="text">婚礼时间</p>
+      </div>
       <p className="text-intro">
-        2021年09月27日 12时00分&nbsp;
+        2021年09月27日 12时00分
         <br />
         农历：八月廿一（星期一）
+      </p>
+      <img className="calendar" src={images.calendar} />
+      <div className="subtitle-section">
+        <p className="en">LOCATION</p>
+        <p className="text">婚礼地点</p>
+      </div>
+      <p className="text-intro">
+        党校餐厅（吕梁市委党校院内）
+        <br />
+        滨河北中路32号
+        <br />
+        山西省·吕梁市·离石区
+      </p>
+      <div className="location-map" ref={mapContainerRef}></div>
+      <div className="subtitle-section">
+        <p className="en">PROCESS</p>
+        <p className="text">流程</p>
+      </div>
+      <p className="text-intro">
+        08:00 迎接新娘
+        <br />
+        10:00 宾客签到
+        <br />
+        11:00 婚礼仪式
+        <br />
+        12:00 婚礼午宴
+      </p>
+      <img className="process-decorator" src={images.processDecorator} />
+      <div className="p19-20">
+        <img className="p19" src={images.p19} />
+        <img className="p20" src={images.p20} />
+      </div>
+      <p className="text-intro">
+        年少的你
+        <br />
+        是我整个青春的阳光
+        <br />
+        未来的你
+        <br />
+        是我一生的欢喜
+        <br />
+        其实
+        <br />
+        人生只要两次幸运就好
+        <br />
+        一次遇见你,一次走到底
+        <br />
+        <br />
+        <img className="separator-reed" src={images.reedSeparator} />
+      </p>
+      <img className="p21" src={images.p21} />
+      <div className="horizontal-images">
+        <img className="p22" src={images.p22} />
+        <img className="p23" src={images.p23} />
+      </div>
+      <p className="text-intro large-margin">
+        愿所爱皆可得 所想皆如愿
+        <br />
+        <br />
+        我们的故事未完待续……
+        <br />
+        <img className="hugging-separator" src={images.huggingSeparator} />
+        <br />
+        <br />
+        感谢你/不远千里/为我们而来
+        <br />
+        <br />
+        婚礼短暂，情意长存
+        <br />
+        好久不见，顺问秋安
+        <br />
+        2021 / 09 / 27
+        <br />
+        我们，婚礼见
       </p>
     </main>
   );
