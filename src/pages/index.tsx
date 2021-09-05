@@ -8,13 +8,26 @@ import bgMusic from "../audios/perfect.mp3";
 import "./index.scss";
 
 const isBrowser = typeof window !== "undefined";
+const isInWeChat =
+  isBrowser && /micromessenger/.test(navigator.userAgent.toLowerCase());
+const wx = isBrowser ? require("weixin-js-sdk") : undefined;
 
 const IndexPage: React.FC<PageProps> = () => {
   const mapContainerRef = React.useRef<HTMLDivElement>();
   const audioRef = React.useRef<HTMLAudioElement>();
+  const [nameEditMode, setNameEditMode] = React.useState(false);
+  const [pendingName, setPendingName] = React.useState("");
+
+  const toName = isBrowser
+    ? React.useMemo(
+        () =>
+          new URLSearchParams(window.location.search).get("to") ||
+          "亲爱的朋友们",
+        [window.location.search]
+      )
+    : "";
 
   React.useEffect(() => {
-    if (!isBrowser) return;
     const initMap = () => {
       return new TMap.Map(mapContainerRef.current, {
         center: new TMap.LatLng(37.525263, 111.155715),
@@ -40,7 +53,6 @@ const IndexPage: React.FC<PageProps> = () => {
   }, []);
 
   React.useEffect(() => {
-    if (!isBrowser) return;
     axios
       .post(
         "https://saiqi-wedding-2gmpuvbh78a2acf0-1307038777.ap-shanghai.app.tcloudbase.com/wx-config",
@@ -49,24 +61,37 @@ const IndexPage: React.FC<PageProps> = () => {
         }
       )
       .then(({ data }) => {
-        const wx = require("weixin-js-sdk");
         wx.config({
           ...data,
           debug: process.env.NODE_ENV === "development",
           jsApiList: ["updateAppMessageShareData", "updateTimelineShareData"],
         });
-        wx.ready(function () {
-          audioRef.current.play();
-        });
       });
   }, []);
 
-  const toName = React.useMemo(
-    () =>
-      (isBrowser && new URLSearchParams(window.location.search).get("to")) ||
-      "亲爱的朋友们",
-    []
-  );
+  React.useEffect(() => {
+    if (isInWeChat) {
+      wx.ready(function () {
+        audioRef.current.play();
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
+    wx.ready(() => {
+      wx.updateAppMessageShareData({
+        title: "贾赛奇 & 薛佳盈 | 婚礼邀请函",
+        desc: `恭请：${toName}\n于9月27日吕梁党校餐厅\n莅临我们的新婚典礼！`,
+        link: window.location.href,
+        imgUrl: `${window.location.protocol}//${window.location.host}${images.musicCover}`,
+      });
+      wx.updateTimelineShareData({
+        title: "贾赛奇 & 薛佳盈 💍 婚礼邀请函",
+        link: `${window.location.protocol}//${window.location.host}`,
+        imgUrl: `${window.location.protocol}//${window.location.host}${images.musicCover}`,
+      });
+    });
+  }, [toName]);
 
   return (
     <main>
@@ -96,7 +121,29 @@ const IndexPage: React.FC<PageProps> = () => {
         <script src="https://map.qq.com/api/gljs?v=1.exp&key=WRTBZ-6RPEP-J5LDB-LEUAY-SS26E-ZWFEU&callback=onTMapLoaded"></script>
       </Helmet>
       <h1 className="title">贾赛奇 & 薛佳盈 💍 婚礼邀请函</h1>
-      <p className="subtitle">To {toName}</p>
+      {nameEditMode && (
+        <form
+          onSubmit={(e) => {
+            const url = new URL(window.location.href);
+            url.searchParams.set("to", pendingName);
+            window.history.pushState({}, "", url.toString());
+            setNameEditMode(false);
+            setPendingName("");
+            e.preventDefault();
+          }}
+        >
+          <input
+            autoFocus
+            type="text"
+            enterKeyHint="done"
+            value={pendingName}
+            onChange={(e) => setPendingName(e.target.value)}
+          />
+        </form>
+      )}
+      <p className="subtitle" onClick={() => setNameEditMode(true)}>
+        To: {toName}
+      </p>
       <img src={images.p1} />
       <p className="text-hello">
         “Hi ～ 这是一封心意满满的
@@ -151,7 +198,9 @@ const IndexPage: React.FC<PageProps> = () => {
           </div>
           <div className="name">
             <h3 className="serif">THE GROOM</h3>
-            <p>新郎 | 贾赛奇</p>
+            <p>
+              新郎 <span className="divider">|</span> 贾赛奇
+            </p>
           </div>
         </div>
         <div className="you">
@@ -161,7 +210,9 @@ const IndexPage: React.FC<PageProps> = () => {
           </div>
           <div className="name">
             <h3 className="serif">THE BRIDE</h3>
-            <p>新娘 | 薛佳盈</p>
+            <p>
+              新娘 <span className="divider">|</span> 薛佳盈
+            </p>
           </div>
         </div>
       </div>
