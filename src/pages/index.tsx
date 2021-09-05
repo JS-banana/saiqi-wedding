@@ -1,13 +1,20 @@
 import * as React from "react";
 import { PageProps } from "gatsby";
 import { Helmet } from "react-helmet";
+import axios from "axios";
 
 import * as images from "../images";
+import bgMusic from "../audios/perfect.mp3";
 import "./index.scss";
+
+const isBrowser = typeof window !== "undefined";
 
 const IndexPage: React.FC<PageProps> = () => {
   const mapContainerRef = React.useRef<HTMLDivElement>();
+  const audioRef = React.useRef<HTMLAudioElement>();
+
   React.useEffect(() => {
+    if (!isBrowser) return;
     const initMap = () => {
       return new TMap.Map(mapContainerRef.current, {
         center: new TMap.LatLng(37.525263, 111.155715),
@@ -32,10 +39,43 @@ const IndexPage: React.FC<PageProps> = () => {
     };
   }, []);
 
+  React.useEffect(() => {
+    if (!isBrowser) return;
+    axios
+      .post(
+        "https://saiqi-wedding-2gmpuvbh78a2acf0-1307038777.ap-shanghai.app.tcloudbase.com/wx-config",
+        {
+          url: window.location.href,
+        }
+      )
+      .then(({ data }) => {
+        const wx = require("weixin-js-sdk");
+        wx.config({
+          ...data,
+          debug: process.env.NODE_ENV === "development",
+          jsApiList: ["updateAppMessageShareData", "updateTimelineShareData"],
+        });
+        wx.ready(function () {
+          audioRef.current.play();
+        });
+      });
+  }, []);
+
+  const toName = React.useMemo(
+    () =>
+      (isBrowser && new URLSearchParams(window.location.search).get("to")) ||
+      "亲爱的朋友们",
+    []
+  );
+
   return (
     <main>
       <Helmet>
         <title>贾赛奇 & 薛佳盈的婚礼邀请函</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -55,24 +95,17 @@ const IndexPage: React.FC<PageProps> = () => {
         />
         <script src="https://map.qq.com/api/gljs?v=1.exp&key=WRTBZ-6RPEP-J5LDB-LEUAY-SS26E-ZWFEU&callback=onTMapLoaded"></script>
       </Helmet>
-      <h1 className="title">Save the date丨贾赛奇 & 薛佳盈的婚礼邀请函</h1>
-      <p className="subtitle">
-        贾先森 & 薛可爱<span className="date">2021.09.27</span>
-      </p>
-      <div className="topic-box">
-        <h3>收录于话题</h3>
-        <p className="topics">＃爱情 ＃生活 ＃青春 ＃唯美 ＃纪念 ＃婚礼</p>
-      </div>
+      <h1 className="title">贾赛奇 & 薛佳盈 💍 婚礼邀请函</h1>
+      <p className="subtitle">To {toName}</p>
       <img src={images.p1} />
       <p className="text-hello">
         “Hi ～ 这是一封心意满满的
         <br />
         婚礼邀请函
         <br />
-        点击音乐，边听边看
-        <br />
         一起分享我们的喜悦吧”
       </p>
+      <audio ref={audioRef} src={bgMusic} autoPlay preload="auto" loop></audio>
       <div className="music-box">
         <div className="info">
           <h3>Perfect ♫</h3>
@@ -187,13 +220,6 @@ const IndexPage: React.FC<PageProps> = () => {
         既然遇到
         <br />
         就想这样一直牵着你的手不放开
-        <br />
-        <br />
-        比起恋人我们更像是地球上的另一个自己
-        <br />
-        拥有不需磨合的默契和一致的三观
-        <br />
-        我们确定，他 / 她就是对的人
       </p>
       <div className="horizontal-images">
         <img className="p8" src={images.p8} />
@@ -278,7 +304,7 @@ const IndexPage: React.FC<PageProps> = () => {
         <p className="text">婚礼地点</p>
       </div>
       <p className="text-intro">
-        党校餐厅（吕梁市委党校院内）
+        党校餐厅（一楼如意厅）
         <br />
         滨河北中路32号
         <br />
@@ -289,14 +315,14 @@ const IndexPage: React.FC<PageProps> = () => {
         <p className="en">PROCESS</p>
         <p className="text">流程</p>
       </div>
-      <p className="text-intro">
-        08:00 迎接新娘
+      <p className="text-intro text-process">
+        <span className="time">08:00</span>迎接新娘
         <br />
-        10:00 宾客签到
+        <span className="time">10:00</span>宾客签到
         <br />
-        11:00 婚礼仪式
+        <span className="time">11:00</span>婚礼仪式
         <br />
-        12:00 婚礼午宴
+        <span className="time">12:00</span>婚礼午宴
       </p>
       <img className="process-decorator" src={images.processDecorator} />
       <div className="p19-20">
@@ -321,20 +347,11 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         <img className="separator-reed" src={images.reedSeparator} />
       </p>
-      <img className="p21" src={images.p21} />
       <div className="horizontal-images">
         <img className="p22" src={images.p22} />
         <img className="p23" src={images.p23} />
       </div>
       <p className="text-intro large-margin">
-        愿所爱皆可得 所想皆如愿
-        <br />
-        <br />
-        我们的故事未完待续……
-        <br />
-        <img className="hugging-separator" src={images.huggingSeparator} />
-        <br />
-        <br />
         感谢你/不远千里/为我们而来
         <br />
         <br />
@@ -344,7 +361,15 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         2021 / 09 / 27
         <br />
-        我们，婚礼见
+        婚礼相见 ❤️
+      </p>
+      <img className="p21" src={images.p21} />
+      <p className="text-intro large-margin">
+        愿所爱皆可得 所想皆如愿
+        <br />
+        我们的故事未完待续……
+        <br />
+        <img className="hugging-separator" src={images.huggingSeparator} />
       </p>
     </main>
   );

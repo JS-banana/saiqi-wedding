@@ -1,4 +1,16 @@
 {
   "version": "2.0",
-  "envId": "saiqi-wedding-2gmpuvbh78a2acf0"
+  "envId": "saiqi-wedding-2gmpuvbh78a2acf0",
+  "functions": [
+    {
+      "name": "wx-config",
+      "timeout": 5,
+      "memorySize": 128,
+      "runtime": "Nodejs12.16",
+      "envVariables": {
+        "wxAppId": "{{env.WX_APP_ID}}",
+        "wxAppSecret": "{{env.WX_APP_SECRET}}"
+      }
+    }
+  ]
 }

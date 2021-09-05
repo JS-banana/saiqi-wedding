@@ -50,35 +50,17 @@ h3 {
 }
 
 .title {
-  font-size: 23px;
+  font-size: 22px;
   line-height: 30px;
   color: #262626;
   margin: 0 8px;
+  font-weight: normal;
+  text-align: center;
 }
 
 .subtitle {
-  margin: 12px 8px 0;
-
-  .date {
-    margin-left: 12px;
-  }
-}
-
-.topic-box {
-  background: #f0f0f0;
-  border-radius: 6px;
-  padding: 16px 12px;
-  margin: 22px 8px;
-
-  h3 {
-    margin: 0 0 12px;
-  }
-
-  .topics {
-    color: #83a4c9;
-    margin: 0;
-    line-height: 18px;
-  }
+  text-align: center;
+  margin-bottom: 16px;
 }
 
 .text-hello {
@@ -304,7 +286,8 @@ h3 {
 
 .subtitle-section {
   text-align: center;
-  margin: 25px 0;
+  margin: 31px 0;
+  transform: scale(0.9);
 
   p {
     margin: 0;
@@ -331,10 +314,30 @@ h3 {
 .calendar {
   box-shadow: rgb(148 146 146) 0px 0px 2px 0px;
   width: 90%;
+  margin: 23px auto;
+}
+
+.location-map {
+  a[href="http://map.qq.com?ref=jsapi_v3"]
+  {
+    display: none;
+  }
+  .logo-text {
+    display: none;
+  }
+}
+
+.text-process {
+  line-height: 39px;
+  letter-spacing: 2px;
+
+  .time {
+    margin-right: 24px;
+  }
 }
 
 .process-decorator {
-  width: 70%;
+  width: 85%;
 }
 
 .p19-20 {
@@ -343,7 +346,7 @@ h3 {
   align-self: center;
   justify-content: center;
   width: 94%;
-  margin: 36px auto;
+  margin: 48px auto;
 
   .p19 {
     border: 1px solid #262626;
@@ -361,7 +364,6 @@ h3 {
 
 .p21 {
   width: 94%;
-  margin-bottom: 2%;
 }
 
 .p22,
