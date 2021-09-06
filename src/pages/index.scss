@@ -102,7 +102,7 @@ h3 {
 
   .serif {
     @include serif-font;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     font-weight: bold;
   }
 
@@ -313,7 +313,7 @@ h3 {
 .calendar {
   box-shadow: rgb(148 146 146) 0px 0px 2px 0px;
   width: 90%;
-  margin: 23px auto;
+  margin: 23px auto 38px;
 }
 
 .location-map {

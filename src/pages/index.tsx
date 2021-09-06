@@ -120,7 +120,9 @@ const IndexPage: React.FC<PageProps> = () => {
         />
         <script src="https://map.qq.com/api/gljs?v=1.exp&key=WRTBZ-6RPEP-J5LDB-LEUAY-SS26E-ZWFEU&callback=onTMapLoaded"></script>
       </Helmet>
-      <h1 className="title">贾赛奇 & 薛佳盈 💍 婚礼邀请函</h1>
+      <h1 className="title">
+        贾赛奇 & 薛佳盈 <span className="divider">|</span> 婚礼邀请函
+      </h1>
       {nameEditMode && (
         <form
           onSubmit={(e) => {
@@ -146,11 +148,9 @@ const IndexPage: React.FC<PageProps> = () => {
       </p>
       <img src={images.p1} />
       <p className="text-hello">
-        “Hi ～ 这是一封心意满满的
+        “Hi，这是一份心意满满的邀请函
         <br />
-        婚礼邀请函
-        <br />
-        一起分享我们的喜悦吧”
+        婚请注意查收哦~ ”
       </p>
       <audio ref={audioRef} src={bgMusic} autoPlay preload="auto" loop></audio>
       <div className="music-box">
@@ -166,7 +166,6 @@ const IndexPage: React.FC<PageProps> = () => {
         当你收到这份请柬的时候
         <br />
         我们的婚礼已经进入倒计时啦～
-        <br />
         <br />
         这是一场人生中为数不多的相聚
         <br />
@@ -341,7 +340,7 @@ const IndexPage: React.FC<PageProps> = () => {
         见证和分享我们的幸福时刻
       </p>
       <div className="subtitle-section">
-        <p className="en">WEDDING TIME</p>
+        <p className="en">TIME</p>
         <p className="text">婚礼时间</p>
       </div>
       <p className="text-intro">
@@ -367,13 +366,13 @@ const IndexPage: React.FC<PageProps> = () => {
         <p className="text">流程</p>
       </div>
       <p className="text-intro text-process">
-        <span className="time">08:00</span>迎接新娘
+        <span className="time">08:30</span>迎接新娘
         <br />
-        <span className="time">10:00</span>宾客签到
+        <span className="time">11:30</span>宾客签到
         <br />
-        <span className="time">11:00</span>婚礼仪式
+        <span className="time">12:00</span>婚礼仪式
         <br />
-        <span className="time">12:00</span>婚礼午宴
+        <span className="time">12:30</span>婚礼午宴
       </p>
       <img className="process-decorator" src={images.processDecorator} />
       <div className="p19-20">
@@ -403,8 +402,9 @@ const IndexPage: React.FC<PageProps> = () => {
         <img className="p23" src={images.p23} />
       </div>
       <p className="text-intro large-margin">
-        感谢你/不远千里/为我们而来
+        感谢你 / 不远千里 / 为我们而来
         <br />
+        ❤️
         <br />
         婚礼短暂，情意长存
         <br />
@@ -412,7 +412,7 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         2021 / 09 / 27
         <br />
-        婚礼相见 ❤️
+        婚礼见
       </p>
       <img className="p21" src={images.p21} />
       <p className="text-intro large-margin">
