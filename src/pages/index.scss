@@ -233,6 +233,32 @@ h3 {
   margin-bottom: 15px;
 }
 
+.countdown {
+  text-align: center;
+  margin-bottom: 37px;
+
+  .text {
+    margin: 0 0 5px;
+    color: #262626;
+    font-size: 17px;
+  }
+
+  .numbers {
+    display: flex;
+    justify-content: center;
+  }
+
+  .number {
+    padding: 6px 17px;
+    margin: 0 8px;
+    font-size: 16px;
+    line-height: 18px;
+    background-color: #5d5d5d;
+    color: #ffffff;
+    border-radius: 4px;
+  }
+}
+
 .p8,
 .p9,
 .p10 {

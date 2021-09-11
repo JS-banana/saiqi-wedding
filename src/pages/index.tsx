@@ -12,11 +12,31 @@ const isInWeChat =
   isBrowser && /micromessenger/.test(navigator.userAgent.toLowerCase());
 const wx = isBrowser ? require("weixin-js-sdk") : undefined;
 
+function calculateCountdown(): {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  totalSeconds: number;
+} {
+  const now = new Date();
+  const end = new Date("2021-09-27T12:00:00+08:00");
+  const diff = end.getTime() - now.getTime();
+  const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+  const hours = Math.floor((diff / (60 * 60 * 1000)) % 24);
+  const minutes = Math.floor((diff / (60 * 1000)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+  return { days, hours, minutes, seconds, totalSeconds: diff / 1000 };
+}
+
 const IndexPage: React.FC<PageProps> = () => {
   const mapContainerRef = React.useRef<HTMLDivElement>();
   const audioRef = React.useRef<HTMLAudioElement>();
   const [nameEditMode, setNameEditMode] = React.useState(false);
   const [pendingName, setPendingName] = React.useState("");
+  const [remainingTime, setRemainingTime] = React.useState(
+    calculateCountdown()
+  );
 
   const toName = isBrowser
     ? React.useMemo(
@@ -26,6 +46,13 @@ const IndexPage: React.FC<PageProps> = () => {
         [window.location.search]
       )
     : "";
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setRemainingTime(calculateCountdown());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   React.useEffect(() => {
     const initMap = () => {
@@ -81,14 +108,14 @@ const IndexPage: React.FC<PageProps> = () => {
     wx.ready(() => {
       wx.updateAppMessageShareData({
         title: "贾赛奇 & 薛佳盈 | 婚礼邀请函",
-        desc: `恭请：${toName}\n于9月27日吕梁党校餐厅\n莅临我们的新婚典礼！`,
+        desc: `诚邀：${toName}\n9月27日于吕梁党校餐厅\n参加我们的婚礼`,
         link: window.location.href,
-        imgUrl: `${window.location.protocol}//${window.location.host}${images.musicCover}`,
+        imgUrl: `${window.location.protocol}//${window.location.host}${images.shareCover}`,
       });
       wx.updateTimelineShareData({
-        title: "贾赛奇 & 薛佳盈 💍 婚礼邀请函",
+        title: "贾赛奇 & 薛佳盈 | 婚礼邀请函",
         link: `${window.location.protocol}//${window.location.host}`,
-        imgUrl: `${window.location.protocol}//${window.location.host}${images.musicCover}`,
+        imgUrl: `${window.location.protocol}//${window.location.host}${images.shareCover}`,
       });
     });
   }, [toName]);
@@ -148,9 +175,9 @@ const IndexPage: React.FC<PageProps> = () => {
       </p>
       <img src={images.p1} />
       <p className="text-hello">
-        “Hi，这是一份心意满满的邀请函
+        “Hi，这是一份心意满满的邀请函&nbsp;&nbsp;
         <br />
-        婚请注意查收哦~ ”
+        &nbsp;&nbsp;请注意查收哦～”
       </p>
       <audio ref={audioRef} src={bgMusic} autoPlay preload="auto" loop></audio>
       <div className="music-box">
@@ -397,6 +424,29 @@ const IndexPage: React.FC<PageProps> = () => {
         <br />
         <img className="separator-reed" src={images.reedSeparator} />
       </p>
+      {remainingTime.totalSeconds >= 0 && (
+        <div className="countdown">
+          <p className="text">
+            ◇ 婚 礼 倒 计 时 ◇
+            <br />
+            ————————————
+          </p>
+          <div className="numbers">
+            <div className="number">
+              {remainingTime.days} <br /> 天
+            </div>
+            <div className="number">
+              {remainingTime.hours} <br /> 时
+            </div>
+            <div className="number">
+              {remainingTime.minutes} <br /> 分
+            </div>
+            <div className="number">
+              {remainingTime.seconds} <br /> 秒
+            </div>
+          </div>
+        </div>
+      )}
       <div className="horizontal-images">
         <img className="p22" src={images.p22} />
         <img className="p23" src={images.p23} />
