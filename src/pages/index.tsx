@@ -110,12 +110,12 @@ const IndexPage: React.FC<PageProps> = () => {
         title: "贾赛奇 & 薛佳盈 | 婚礼邀请函",
         desc: `诚邀：${toName}\n9月27日于吕梁党校餐厅\n参加我们的婚礼`,
         link: window.location.href,
-        imgUrl: `${window.location.protocol}//${window.location.host}${images.shareCover}`,
+        imgUrl: `${window.location.protocol}//${window.location.host}/share-cover.jpg`,
       });
       wx.updateTimelineShareData({
         title: "贾赛奇 & 薛佳盈 | 婚礼邀请函",
         link: `${window.location.protocol}//${window.location.host}`,
-        imgUrl: `${window.location.protocol}//${window.location.host}${images.shareCover}`,
+        imgUrl: `${window.location.protocol}//${window.location.host}/share-cover.jpg`,
       });
     });
   }, [toName]);

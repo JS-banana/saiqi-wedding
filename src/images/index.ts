@@ -33,4 +33,3 @@ export { default as redXi } from "./red-xi.png";
 export { default as calendar } from "./calendar.png";
 export { default as processDecorator } from "./process-decorator.png";
 export { default as huggingSeparator } from "./hugging-separator.jpg";
-export { default as shareCover } from "./share-cover.jpg";
